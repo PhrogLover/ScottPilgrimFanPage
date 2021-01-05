@@ -1,9 +1,11 @@
-cons express = require("express");
-const path = require("path");
-
+const express = require('express');
 const app = express();
-app.get("/*", (req,res) => {
-    res.sendFile(path.resolve("index.html"));
+const path = require("path")
+
+app.use(express.static("client"));
+
+app.get('/*', function(req, res){
+   res.sendFile(path.resolve("client","index.html"));
 });
 
-app.listen(process.env.PORT || 5060, () => console.log("Server Running"));
+app.listen(8090, () => console.log("Server Running..."));
