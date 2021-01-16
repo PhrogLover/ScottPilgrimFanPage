@@ -1,0 +1,58 @@
+[
+    {
+        "id": 0,
+        "userName": "Tom Jones",
+        "date": "15.1.2021",
+        "rating": "Liked",
+        "body": "Bread makes you fat? This is one of Edgar Wright's best. \"Scott Pilgrim\" is truly one of the (if not the) best graphic novel adaptations I have ever seen. I listened to the director's commentary and (fun fact), for scenes that took place in the music store, they actually organized all the posters in the background to make it look more like the original comic. It's these tiny details that make the movie great.",
+        "likes":6
+    },
+    {
+        "id": 1,
+        "userName": "Louis Armstrong",
+        "date": "14.1.2021",
+        "rating": "Liked",
+        "body": "An absolute masterpiece of a film. Edgar Wright is such a talented director and personally I think the casting choice is absolutely perfect based on the graphic novel. I love this film to high heavens. Years later it's still my all time favourite.",
+        "likes":4
+    },
+    {
+        "id": 2,
+        "userName": "Neil Diamond",
+        "date": "14.1.2021",
+        "rating": "Liked",
+        "body": "In my opinion, this is the most perfect teenage movie of all time. It has all the things i want for a movie: Action, Comedy, Romance and it's all blended together perfectly with no absolute miscalculations. To this day it still blows my mind of how perfect the casting is, but everyone had mixed reactions from Cera. I think Cera is perfect for Pilgrim. I mean i can't really imagine anyone else playing this role.",
+        "likes":5
+    },
+    {
+        "id": 3,
+        "userName": "Elvis Presley",
+        "date": "15.1.2021",
+        "rating": "Liked",
+        "body": "I love how the whole movie is like a video game. From the 8-bit sound effects, the eye-opening, action packed fight scenes, and having Chris Evans before he was Captain America and Brie Larson before she was Captain Marvel make it even better.",
+        "likes":8
+    },
+    {
+        "id": 4,
+        "userName": "Frankie Valli",
+        "date": "13.1.2021",
+        "rating": "Disliked",
+        "body": "Jesus it’s dull. I felt compelled to review just because the others were so positive. The relationships between some of the main characters are interesting and well developed but my god the fight scenes are boring. It’s amazing I’m awake to write this.",
+        "likes":1
+    },
+    {
+        "id": 5,
+        "userName": "Paul McCartney",
+        "date": "12.1.2021",
+        "rating": "Disliked",
+        "body": "Please stop using a socially awkward bad actor like michael cera for every alternative post teenager role",
+        "likes":1
+    },
+    {
+        "id": 6,
+        "userName": "Paul Anka",
+        "date": "17.1.2021",
+        "rating": "Liked",
+        "body": "fhdjackbd i LOVE LOMGGSAJHVFBBEF  FWEAJ OMGGGGGG I CANNOT ITS SO GOOD HELLO I LOVE THIS SOOOO DSAKn\nfv  vmuch omgggg i love loe love love love love love love  iii love it hello??? ILOVEIT UHHH WHAT I LOVEIT SO SO SO SOOS SOSOOSOOSOOSO GOOOOOOOOOOOOOD II LIVE IT SOOO MUCH HELLLOOOOO OMGGGGG  I LOVE LOVE LOVE LOVE LOVE LOVE LOVE LOVELOVE shaJKKCBJV JULIIIEE IS AN ICON HELLO SHES AN ICON I LOVE LOVE LOVE HER SO MUCH JULIIIIIIIE JULIIIIIIIIIIIEEEE AND AND AND AND AND KNIVES OMGG WHEN SHE DYES HER HAIR BROOOOOO SO COOOOL AND OOOOOMMMMMGGG what is that one girl called jksbv i forgot her name BUT SHES SOOOO COOOLL HELLO bro and ramona HELOOOOOOOOO OMGGGGGGG ramona is the blueprint yessssssssssssssssssss omg okay",
+        "likes":6
+    }
+]
