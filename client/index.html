@@ -44,27 +44,27 @@
             <input type="image" class= "squares" id ="KimBox" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5" src = "images/Kim_Icon.jpg">
             <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Scott">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>
             </div>
             <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Ramona">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
             <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Wallace">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
             <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Knives">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
             <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Kim">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
             
@@ -75,27 +75,27 @@
             <input type="image" class= "squares" id ="EnvyBox" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="true" aria-controls="collapse10" src = "images/Envy_Icon.jpg">
             <div id="collapse6" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Stephen">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>
             </div>
             <div id="collapse7" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Neil">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
             <div id="collapse8" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Stacey">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
             <div id="collapse9" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Julie">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
             <div id="collapse10" class="accordion-collapse collapse" data-bs-parent="#accordion">
                 <div class="content" id="Envy">
-                    Loading ...
+                    <br><br>Loading ...
                 </div>  
             </div>
         </div>
@@ -107,27 +107,27 @@
         <input type="image" class= "squares" id ="GideonBox" data-bs-toggle="collapse" data-bs-target="#collapse15" aria-expanded="true" aria-controls="collapse15" src = "images/Gideon_Icon.jpg">
         <div id="collapse11" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <div class="content" id="Matthew">
-                Loading ...
+                <br><br>Loading ...
             </div>
         </div>
         <div id="collapse12" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <div class="content" id="Lucas">
-                Loading ...
+                <br><br>Loading ...
             </div>  
         </div>
         <div id="collapse13" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <div class="content" id="Todd">
-                Loading ...
+                <br><br>Loading ...
             </div>  
         </div>
         <div id="collapse14" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <div class="content" id="Roxie">
-                Loading ...
+                <br><br>Loading ...
             </div>  
         </div>
         <div id="collapse15" class="accordion-collapse collapse" data-bs-parent="#accordion">
             <div class="content" id="Gideon">
-                Loading ...
+                <br><br>Loading ...
             </div>  
         </div>
     </div>  
@@ -148,24 +148,14 @@
             <div class="row">
                 <div class="controls">
                     <label class="radio ratinglabel">
-                      <input type="radio" name="rating" value="1" required>
-                      1
+                        <img src="images/Thumbs_Up.png" class="thumbs">
+                        <input type="radio" name="rating" value="Liked" required>
+                        Liked
                     </label>
                     <label class="radio ratinglabel">
-                       <input type="radio" name="rating" value="2">
-                       2
-                    </label>
-                    <label class="radio ratinglabel">
-                      <input type="radio" name="rating" value="3">
-                      3
-                    </label>
-                    <label class="radio ratinglabel">
-                      <input type="radio" name="rating" value="4">
-                      4
-                    </label>
-                    <label class="radio ratinglabel">
-                      <input type="radio" name="rating" value="5">
-                      5
+                        <img src="images/Thumbs_Down.png" class="thumbs">
+                        <input type="radio" name="rating" value="Disliked">
+                        Disliked
                     </label>
                   </div>
             </div>
@@ -173,14 +163,15 @@
                 <textarea placeholder="What do you think of this film?" required id="new_comment_body" rows="3"></textarea>
             </div>
             <div class="row">
-                <button type="submit" class="post-button">Post</button>
+                <button type="submit" class="post-button" id="post_new_comment">Post</button>
             </div>
         </form>
     </div>
     <br><br>
-    <div class ="comment-section">
-
-
+    <div class ="comment-section" id="commentSection">
+    </div>
+    <div class="subtitle">
+        <h3 id="load-more">Load more comments</h3>
     </div>
 
 
