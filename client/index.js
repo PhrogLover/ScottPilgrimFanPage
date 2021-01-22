@@ -1,68 +1,71 @@
-let characterlist = [];
+let characterList = [];
+let characterNames = [];
 let commentsLength = 0; // length of the comments JSON
+
+//When the page is started up, all the information of the characters and some info about the comments is loaded and put into a global variable
 window.addEventListener('load', async function(event){
     try{
         let response = await fetch("http://127.0.0.1:8090/characters");
-        characterlist = await response.json();
-        characterlist = JSON.parse(JSON.stringify(characterlist));
+        characterList = await response.json();
+        characterList = JSON.parse(JSON.stringify(characterList));
         response = await fetch("http://127.0.0.1:8090/comments/list");
         let comments = await response.json();
         comments = JSON.parse(JSON.stringify(comments));
         commentsLength = comments.length;
         render3Comments(comments);
+        for (let i = 0; i<characterList.length;i++){
+            characterNames.push(characterList[i].Name.split(' ')[0]);
+        }
+        
     }
     catch(e){
-        alert(e+": Please Try Again Later")
+        let container = document.getElementById("main");
+        let error_message = "<div class='subtitle'><div class = 'gap'></div><p class='error big'> 404 Error - Page Not Found </p><p class='error big'> The page you requested cannot be found... </p><div class = 'gap'></div></div><div class = 'gap'></div><div class = 'gap'></div><div class = 'gap'></div>";
+        container.innerHTML = error_message;
     }
   });
 
-let scott = document.getElementById("ScottBox");
-let ramona = document.getElementById("RamonaBox");
-let wallace = document.getElementById("WallaceBox");
-let knives = document.getElementById("KnivesBox");
-let kim = document.getElementById("KimBox");
-let stephen = document.getElementById("StephenBox");
-let neil = document.getElementById("NeilBox");
-let stacey = document.getElementById("StaceyBox");
-let julie = document.getElementById("JulieBox");
-let envy = document.getElementById("EnvyBox");
-let matthew = document.getElementById("MatthewBox");
-let lucas = document.getElementById("LucasBox");
-let todd = document.getElementById("ToddBox");
-let roxie = document.getElementById("RoxieBox");
-let gideon = document.getElementById("GideonBox");
 
+// Error is not expected, however if there is an error with loading the wrong data then this error will occur
 function renderCharacter(name){
-    let data = characterlist;
-    var output = document.getElementById(name); 
-    for (let i = 0;i<data.length;i++){
-        var splitname = data[i].Name.split(' ');
-        if (splitname[0] === name){
-            var htmlstring = "<table><tr> <td><img class='display-picture' src='images/"+splitname[0]+".jpg'></img></td><td><br><p><strong>Name: </strong>"+data[i].Name +"</p> <p><strong> Actor/Actress:  </strong>"+data[i].ActorActress +"</p><p> <strong> Description:  </strong>"+data[i].Description +"</p><br></tr></table>";
-            output.innerHTML = htmlstring;
+    try{
+        let data = characterList;
+        let output = document.getElementById(name); 
+        for (let i = 0;i<data.length;i++){
+            let splitname = data[i].Name.split(' ');
+            if (splitname[0] === name){
+                let htmlstring = "<table><tr> <td><img class='display-picture' src='images/"+splitname[0]+".jpg'></img></td><td><br><p><strong>Name: </strong>"+data[i].Name +"</p> <p><strong> Actor/Actress:  </strong>"+data[i].ActorActress +"</p><p> <strong> Description:  </strong>"+data[i].Description +"</p><br></tr></table>";
+                output.innerHTML = htmlstring;
+            }
         }
+    }
+    catch(e){
+        let container = document.getElementById(name); 
+        let error_message = "<div class = 'small-gap'></div><p> This character's information could not be loaded. Please Try Again Later </p> <div class = 'small-gap'></div>";
+        container.innerHTML = error_message;
     }
 };
 
 
 let displayed = 0; //counts how many comments are loaded and displayed. Needs to be global
+let clientdisplayed = 0; // counts how many comments are loaded that were just recently added
 
 function render3Comments(comments){
     let sortedcomments = comments.sort(function(a, b) {return b.likes - a.likes}); // sorts comments into order of most likes
     let container = document.getElementById("commentSection");
     let htmlstring="";
-    if (displayed <= commentsLength){
+    if (displayed < commentsLength-clientdisplayed){
         let counter = 0;
         for (let i=displayed;i<displayed+3;i++){
-            if (displayed+counter < commentsLength){
-                let thumb = ""
+            if (displayed+counter < commentsLength-clientdisplayed){
+                let thumb = "";
                 if (sortedcomments[i].rating === "Liked"){
                     thumb = "Up"
                 }
                 else{
                     thumb = "Down"
                 }
-                htmlstring += "<div class='comments'><h2><img src='images/Thumbs_"+thumb+".png' class='small-thumbs'>"+sortedcomments[i].userName+"</h2><div class='comment-body'>"+sortedcomments[i].body+"</div><div class='comment-footer'><div class='datepost'>Posted on "+sortedcomments[i].date+"</div><div class='like-section'><img src='images/Like.png' class='like-button small-thumbs' id='thumbup"+sortedcomments[i].id+"'>Likes: "+sortedcomments[i].likes+"</div></div></div><br><br>";
+                htmlstring += "<div class='comments' id='comment"+sortedcomments[i].id+"'><h2><img src='images/Thumbs_"+thumb+".png' class='small-thumbs'>"+sortedcomments[i].userName+"</h2><div class='comment-body'>"+sortedcomments[i].body+"</div><div class='comment-footer'><div class='datepost'>Posted on "+sortedcomments[i].date+"</div><div class='like-section' id='like"+sortedcomments[i].id+"'><img src='images/Like.png' class='like-button small-thumbs' id='thumbup"+sortedcomments[i].id+"'>Likes: "+sortedcomments[i].likes+"</div></div></div><div class = 'small-gap'></div>";
                 counter++;
             }
             else{
@@ -72,20 +75,62 @@ function render3Comments(comments){
         }
         displayed += counter;
         container.insertAdjacentHTML('beforeend',htmlstring);
+        if (displayed >= commentsLength-clientdisplayed){
+            load_more.classList.add("hidden")
+        }
     }
     else{
-        alert("There are no more comments");
+        load_more.classList.add("hidden")
     }
+    
 };
+
+// Renders recently posted comment on top of list, for user to see. And it is not rendered last when "Load more comments" is clicked
+function renderNewComment(newCommentList){
+    let index = newCommentList.length-1;
+    let container = document.getElementById("clientcommentSection");
+    let htmlstring="";
+    let thumb = ""
+        if (newCommentList[index].rating === "Liked"){
+            thumb = "Up"
+        }
+        else{
+            thumb = "Down"
+        }
+    htmlstring = "<div class='comments' id='comment"+newCommentList[index].id+"'><h2><img src='images/Thumbs_"+thumb+".png' class='small-thumbs'>"+newCommentList[index].userName+"</h2><div class='comment-body'>"+newCommentList[index].body+"</div><div class='comment-footer'><div class='datepost'>Posted on "+newCommentList[index].date+"</div><div class='like-section' id='like"+newCommentList[index].id+"'><img src='images/Like.png' class='like-button small-thumbs' id='thumbup"+newCommentList[index].id+"'>Likes: "+newCommentList[index].likes+"</div></div></div><div class = 'small-gap'></div>";
+    container.insertAdjacentHTML('beforeend',htmlstring);
+    
+    clientdisplayed++;
+}
+
+function likedComment(likedComment){
+    let container = document.getElementById("like"+likedComment["id"]);
+    let htmlstring = "<img src='images/Liked.png' class='like-button small-thumbs' id='liked"+likedComment["id"]+"'>Likes: "+likedComment["likes"] //likes
+    container.innerHTML= htmlstring;
+}
+function unlikedComment(unlikedComment){
+    let container = document.getElementById("like"+unlikedComment["id"]);
+    let htmlstring = "<img src='images/Like.png' class='like-button small-thumbs' id='thumbup"+unlikedComment["id"]+"'>Likes: "+unlikedComment["likes"] //unlikes
+    container.innerHTML= htmlstring;
+}
+
 
 let load_more = document.getElementById("load-more");
 
 load_more.addEventListener("click", async function(){
-    let response = await fetch("http://127.0.0.1:8090/comments/list");
-    let comments = await response.json();
-    comments = JSON.parse(JSON.stringify(comments));
-    commentsLength = comments.length;
-    render3Comments(comments);
+    try{
+        let response = await fetch("http://127.0.0.1:8090/comments/list");
+        let comments = await response.json();
+        comments = JSON.parse(JSON.stringify(comments));
+        commentsLength = comments.length;
+        render3Comments(comments);
+    }
+    catch(e){
+        let container = document.getElementById("load-container"); 
+        let error_message = "<p class='error'>"+e+". More comments could not be loaded. Please Try Again Later...</p>";
+        container.innerHTML = error_message;
+    }
+    
     
 });
 
@@ -98,6 +143,7 @@ function clearForm(){
 
 let submit = document.getElementById("post_new_comment");
 
+//Submit the comment button
 submit.addEventListener("click", async function(event){
     event.preventDefault();
     try{
@@ -118,11 +164,16 @@ submit.addEventListener("click", async function(event){
         }
 
         if (userName == "" || body == "" || user_rated == null){
-            alert("Please Fill All The Fields")
+            let container = document.getElementById("submit_error");
+            let error_message = "<p class='error'>Please Fill in All The Fields</p>";
+            container.innerHTML = error_message;
         }
         else{
+            let container = document.getElementById("submit_error");
+            let clear = "";
+            container.innerHTML = clear;
             //Get Id for comment
-            let commentId = commentsLength + 1;
+            let commentId = commentsLength;
             
             //Get Date
             const currentDate = new Date();
@@ -139,8 +190,6 @@ submit.addEventListener("click", async function(event){
                 "body": body,
                 "likes":0
             }
-            console.log(newComment)
-            commentsLength ++;
             let parameters = {'newComment': newComment};
             let response = await fetch('http://127.0.0.1:8090/comments/new', {
             method: 'POST',
@@ -150,57 +199,61 @@ submit.addEventListener("click", async function(event){
             body: JSON.stringify(parameters)
             });
         let newCommentList = await response.json();
+        newCommentList = JSON.parse(JSON.stringify(newCommentList));
+        commentsLength = newCommentList.length;
+        renderNewComment(newCommentList);
         clearForm();
-        //renderNewComment(newCommentList);
+        
         }
     }
     catch(e){
-        alert(e+": Please Try Again Later")
+        let container = document.getElementById("submit_error");
+        let error_message = "<p class='error'>"+e+". Could not post your comment. Please Try Again Later</p>";
+        container.innerHTML = error_message;
+        container = document.getElementById("postButton");
+        let disablePost = "<button type='submit' class='post-button' id='post_new_comment' disabled>Post</button>";
+        container.innerHTML = disablePost;
     }
 });
 
-scott.addEventListener('click', function(event){
-    renderCharacter("Scott");
-})
-ramona.addEventListener('click', function(event){
-    renderCharacter("Ramona");
-})
-wallace.addEventListener('click', function(event){
-    renderCharacter("Wallace");
-})
-knives.addEventListener('click', function(event){
-    renderCharacter("Knives");
-})
-kim.addEventListener('click', function(event){
-    renderCharacter("Kim");
-})
-stephen.addEventListener('click',function(event){
-    renderCharacter("Stephen");
-})
-neil.addEventListener('click', function(event){
-    renderCharacter("Neil");
-})
-stacey.addEventListener('click', function(event){
-    renderCharacter("Stacey");
-})
-julie.addEventListener('click', function(event){
-    renderCharacter("Julie");
-})
-envy.addEventListener('click', function(event){
-    renderCharacter("Envy");
-})
-matthew.addEventListener('click', function(event){
-    renderCharacter("Matthew");
-})
-lucas.addEventListener('click', function(event){
-    renderCharacter("Lucas");
-})
-todd.addEventListener('click',function(event){
-    renderCharacter("Todd");
-})
-roxie.addEventListener('click', function(event){
-    renderCharacter("Roxie");
-})
-gideon.addEventListener('click', function(event){
-    renderCharacter("Gideon");
-})
+//EventListener which sees with like/unlike button (of each comment) is clicked and then sends a post request to update the number of likes
+document.addEventListener('click', async function(ele){
+    for (let i=0;i<commentsLength+clientdisplayed;i++){
+        if(ele.target && ele.target.id== ("thumbup"+i)){
+            let parameters = {'id': i};
+            let response = await fetch('http://127.0.0.1:8090/comments/like', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(parameters)
+            });
+            let editedComments = await response.json();
+            editedComments = JSON.parse(JSON.stringify(editedComments));
+            likedComment(editedComments[i])
+       }
+        if(ele.target && ele.target.id== ("liked"+i)){
+            let parameters = {'id': i};
+            let response = await fetch('http://127.0.0.1:8090/comments/unlike', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(parameters)
+            });
+            let editedComments = await response.json();
+            editedComments = JSON.parse(JSON.stringify(editedComments));
+            unlikedComment(editedComments[i])
+        }
+    }
+ });
+
+//EventListener which listens to all the faces clicked and renders each characters information
+ document.addEventListener('click',async function(ele){
+    let names = characterNames;
+    for (let j=0;j<15;j++){
+        if(ele.target && ele.target.id== (names[j]+"Box")){
+            renderCharacter(names[j]);
+        }
+    }
+});

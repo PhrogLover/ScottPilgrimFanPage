@@ -28,6 +28,7 @@ body{
     left:0;
     background-color: black;
     width: 100%;
+    height:auto;
 }
 table{
     margin-left:5%; 
@@ -40,14 +41,14 @@ td{
     color:white;
 }
 .squares{
-    border: 8px solid white;
+    border: 6px solid white;
     width:18%;
     height:auto;
 }
 .content{
     background-color: black;
     width: 100%;
-    min-height: 340px;
+    min-height: 300px;
     height:auto;
     color:white;
     font-family: Helvetica, sans-serif;
@@ -62,7 +63,7 @@ p{
 }
 .display-picture{
     width:100%;
-    height:300px;
+    height:auto;
     object-fit: cover;
 
 }
@@ -176,10 +177,37 @@ h2{
 .hidden{
     visibility: hidden;
 }
-.active{
-    filter: brightness(150%);
-}
 .like-button:hover{
     filter: brightness(120%);
     cursor: pointer;
+}
+footer{
+    background-color: black;
+    width: 100%;
+    height:auto;
+    min-height: 40px;
+    padding-top:5%;
+    color:white;
+}
+a{
+    color:white;
+}
+a:hover{
+    color:white;
+}
+.gap{
+    height:100px;
+}
+.small-gap{
+    height:50px;
+}
+.error{
+    color:red;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
+.big{
+    font-size: 24px;
+    color:white;
 }

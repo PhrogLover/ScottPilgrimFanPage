@@ -16,7 +16,20 @@ app.post('/comments/new', function(req, resp){
     commentsList.push(newComment);
     resp.json(commentsList);
 });
-
+app.post('/comments/like', function(req, resp){
+    const commentId = req.body.id;
+    commentsList[commentId].likes +=1;
+    resp.json(commentsList);
+});
+app.post('/comments/unlike', function(req, resp){
+    const commentId = req.body.id;
+    commentsList[commentId].likes -=1;
+    resp.json(commentsList);
+});
+// If any other page is typed in the URL, then the Error will show
+app.get('*', function(req, res){
+    res.status(404).send('<h1>404 Error: Page Not Found</h1>');
+});
 
 
 module.exports = app;
@@ -156,7 +169,7 @@ let commentsList = [
         "userName": "Paul Anka",
         "date": "17.1.2021",
         "rating": "Liked",
-        "body": "fhdjackbd i LOVE LOMGGSAJHVFBBEF  FWEAJ OMGGGGGG I CANNOT ITS SO GOOD HELLO I LOVE THIS SOOOO DSAKn\nfv  vmuch omgggg i love loe love love love love love love  iii love it hello??? ILOVEIT UHHH WHAT I LOVEIT SO SO SO SOOS SOSOOSOOSOOSO GOOOOOOOOOOOOOD II LIVE IT SOOO MUCH HELLLOOOOO OMGGGGG  I LOVE LOVE LOVE LOVE LOVE LOVE LOVE LOVELOVE shaJKKCBJV JULIIIEE IS AN ICON HELLO SHES AN ICON I LOVE LOVE LOVE HER SO MUCH JULIIIIIIIE JULIIIIIIIIIIIEEEE AND AND AND AND AND KNIVES OMGG WHEN SHE DYES HER HAIR BROOOOOO SO COOOOL AND OOOOOMMMMMGGG what is that one girl called jksbv i forgot her name BUT SHES SOOOO COOOLL HELLO bro and ramona HELOOOOOOOOO OMGGGGGGG ramona is the blueprint yessssssssssssssssssss omg okay",
+        "body": "From the start of the movie to the end I found my self laughing with incredible visuals and great cast this movie is a must watch for any movie fan. This movie also stays true to the comic and as a Canadian I find this movies comedy funny,and the songs surprisingly good.",
         "likes":6
     }
 ]
