@@ -3,14 +3,15 @@ const app = express();
 app.use(express.static('client'));
 app.use(express.json());
 
+//GET Methods
 app.get('/characters', function(req, resp){
     resp.json(characterList);
 });
-
 app.get('/comments/list', function(req, resp){
     resp.json(commentsList);
 });
 
+//POST Methods
 app.post('/comments/new', function(req, resp){
     const newComment = req.body.newComment;
     commentsList.push(newComment);
@@ -26,7 +27,7 @@ app.post('/comments/unlike', function(req, resp){
     commentsList[commentId].likes -=1;
     resp.json(commentsList);
 });
-// If any other page is typed in the URL, then the Error will show
+// If any other page is typed in the URL, then the Error will show. Placed at the bottom so that the other methods at priority.
 app.get('*', function(req, res){
     res.status(404).send('<h1>404 Error: Page Not Found</h1>');
 });

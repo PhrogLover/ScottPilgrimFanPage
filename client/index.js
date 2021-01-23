@@ -4,6 +4,7 @@ let commentsLength = 0; // length of the comments JSON
 
 //When the page is started up, all the information of the characters and some info about the comments is loaded and put into a global variable
 window.addEventListener('load', async function(event){
+    event.preventDefault();
     try{
         let response = await fetch("http://127.0.0.1:8090/characters");
         characterList = await response.json();
@@ -20,7 +21,7 @@ window.addEventListener('load', async function(event){
     }
     catch(e){
         let container = document.getElementById("main");
-        let error_message = "<div class='subtitle'><div class = 'gap'></div><p class='error big'> 404 Error - Page Not Found </p><p class='error big'> The page you requested cannot be found... </p><div class = 'gap'></div></div><div class = 'gap'></div><div class = 'gap'></div><div class = 'gap'></div>";
+        let error_message = "<div class='subtitle'><div class = 'gap'></div><p class='error big'> 404 Error - Page Not Found </p><p class='error big'> The Page You Requested Could Not Be Loaded... </p><div class = 'gap'></div></div><div class = 'gap'></div><div class = 'gap'></div><div class = 'gap'></div>";
         container.innerHTML = error_message;
     }
   });
@@ -34,7 +35,7 @@ function renderCharacter(name){
         for (let i = 0;i<data.length;i++){
             let splitname = data[i].Name.split(' ');
             if (splitname[0] === name){
-                let htmlstring = "<table><tr> <td><img class='display-picture' src='images/"+splitname[0]+".jpg'></img></td><td><br><p><strong>Name: </strong>"+data[i].Name +"</p> <p><strong> Actor/Actress:  </strong>"+data[i].ActorActress +"</p><p> <strong> Description:  </strong>"+data[i].Description +"</p><br></tr></table>";
+                let htmlstring = "<table><tr> <td><img class='display-picture' src='images/"+splitname[0]+".jpg' alt ='"+splitname[0]+"_Full_Image'></img></td><td><br><p><strong>Name: </strong>"+data[i].Name +"</p> <p><strong> Actor/Actress:  </strong>"+data[i].ActorActress +"</p><p> <strong> Description:  </strong>"+data[i].Description +"</p><br></tr></table>";
                 output.innerHTML = htmlstring;
             }
         }
@@ -44,7 +45,7 @@ function renderCharacter(name){
         let error_message = "<div class = 'small-gap'></div><p> This character's information could not be loaded. Please Try Again Later </p> <div class = 'small-gap'></div>";
         container.innerHTML = error_message;
     }
-};
+}
 
 
 let displayed = 0; //counts how many comments are loaded and displayed. Needs to be global
@@ -83,7 +84,7 @@ function render3Comments(comments){
         load_more.classList.add("hidden")
     }
     
-};
+}
 
 // Renders recently posted comment on top of list, for user to see. And it is not rendered last when "Load more comments" is clicked
 function renderNewComment(newCommentList){
@@ -127,7 +128,7 @@ load_more.addEventListener("click", async function(){
     }
     catch(e){
         let container = document.getElementById("load-container"); 
-        let error_message = "<p class='error'>"+e+". More comments could not be loaded. Please Try Again Later...</p>";
+        let error_message = "<p class='error'>"+e+". More Comments Could Not Be Loaded. Please Try Again Later...</p>";
         container.innerHTML = error_message;
     }
     
@@ -153,14 +154,12 @@ submit.addEventListener("click", async function(event){
         let userName = document.getElementById("new_comment_name").value;
         //Get rating of new comment
         let new_rating = document.getElementsByName("rating");
+        let user_rated = null;
         if(new_rating[0].checked){
-            var user_rated = new_rating[0].value;
+            user_rated = new_rating[0].value;
         }
         else if(new_rating[1].checked){
-            var user_rated = new_rating[1].value;
-        }
-        else{
-            var user_rated = null
+            user_rated = new_rating[1].value;
         }
 
         if (userName == "" || body == "" || user_rated == null){
