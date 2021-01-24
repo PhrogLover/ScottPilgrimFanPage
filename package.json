@@ -4,7 +4,7 @@
   "description": "Prog Black Assignment - Scott Pilgrim Movie Fan Page",
   "main": "server.js",
   "scripts": {
-    "lint": "eslint .",
+    "pretest": "eslint .",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "start": "node server.js",
